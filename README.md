@@ -38,16 +38,15 @@ Tecnologia utilizada:
 
 1. Clone o projeto:
    ```bash
-   git clone https://github.com/seu-usuario/seu-repo.git
+   git clone https://github.com/0t4v14n0/EsteticaAutomotiva.git
    ```
 
 2. Configure o `application.properties`:
    ```properties
    # Banco de Dados
-   spring.datasource.url=jdbc:mysql://localhost:3306/estetica
-   spring.datasource.username=seu_usuario
-   spring.datasource.password=sua_senha
-   spring.jpa.hibernate.ddl-auto=update
+   spring.datasource.url=jdbc:mysql://localhost/automotiva
+   spring.datasource.username=root
+   spring.datasource.password=1234
 
    # E-mail
    spring.mail.host=smtp.seuservidordemail.com
@@ -56,6 +55,19 @@ Tecnologia utilizada:
    spring.mail.password=sua_senha
    spring.mail.properties.mail.smtp.auth=true
    spring.mail.properties.mail.smtp.starttls.enable=true
+
+   # JTW secret
+   secret = ${JTW_SECRET:12345678}
+
+   # Configuracoes de URL
+   frontend.url=${FRONTEND_URL:http://localhost:3000}
+   backend.url=${BACKEND_URL:http://localhost:8080}
+
+   app.verify.url=${backend.url}/auth/confirmar-email?token=
+
+   front.trocarSenhaURL=${frontend.url}/recuperar-senha?token=
+   front.trocarSenhaURL=${frontend.url}/recuperar-senha/
+
    ```
 
 3. Suba o banco de dados MySQL localmente com o nome `estetica`.
@@ -71,22 +83,6 @@ Tecnologia utilizada:
 
 Este backend se comunica via REST API com o frontend feito por Foga, onde os usuários interagem com a interface para agendar serviços e gerenciar seus dados.
 
-## 📁 Estrutura de Diretórios
-
-```
-src
-└── main
-    ├── java
-    │   └── com.seuprojeto.estetica
-    │       ├── controller
-    │       ├── service
-    │       ├── model
-    │       ├── repository
-    │       └── security
-    └── resources
-        ├── application.properties
-        └── templates/email (opcional)
-```
 
 ## 🤝 Colaboração
 
