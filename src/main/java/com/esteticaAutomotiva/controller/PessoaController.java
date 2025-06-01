@@ -26,11 +26,6 @@ public class PessoaController {
     @PutMapping("/atualizar")
     public ResponseEntity<DataDetalhesPessoa> atualizar(@RequestBody @Valid DataAtualizarPessoa data,
 																	  Authentication authentication) {
-        
-    	System.out.println("aqui");
-    	System.out.println(data);
-    	System.out.println(authentication.getAuthorities());
-    	
     	return pessoaService.atualizarPessoa(data,authentication.getName());
     }
 	

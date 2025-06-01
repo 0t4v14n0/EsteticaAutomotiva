@@ -47,7 +47,7 @@ CREATE TABLE agendamento (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     cliente_id BIGINT NOT NULL,
     data DATETIME,
-    status_consulta VARCHAR(50),
+    status_agendamento VARCHAR(50),
     criado_em DATETIME DEFAULT CURRENT_TIMESTAMP,
     atualizado_em DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     

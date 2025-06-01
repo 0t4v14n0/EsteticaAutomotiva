@@ -1,6 +1,8 @@
 package com.esteticaAutomotiva.domain.agendamento;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import com.esteticaAutomotiva.domain.agenda.dto.DataRegistroAgenda;
 import com.esteticaAutomotiva.domain.agenda.enums.StatusAgenda;
 import com.esteticaAutomotiva.domain.agendamento.dto.DataAtualizarAgendamento;
 import com.esteticaAutomotiva.domain.agendamento.dto.DataDetalhesAgendamento;
+import com.esteticaAutomotiva.domain.agendamento.enums.StatusAgendamento;
 import com.esteticaAutomotiva.domain.pessoa.cliente.Cliente;
 import com.esteticaAutomotiva.domain.pessoa.cliente.ClienteRepository;
 import com.esteticaAutomotiva.domain.pessoa.cliente.ClienteService;
@@ -44,6 +47,7 @@ public class AgendamentoService {
 		Agendamento agendamento = new Agendamento();
 		agendamento.setCliente(cliente);
 		agendamento.setData(agenda.getHorario());
+		agendamento.setStatusAgenda(StatusAgendamento.MARCADO);
 		
 		cliente.setQuantidadeAgendamento(cliente.getQuantidadeAgendamento() + 1);
 
@@ -67,11 +71,25 @@ public class AgendamentoService {
 	    return ResponseEntity.ok(new DataDetalhesAgendamento(agendamento));
 	}
 
-	public ResponseEntity<DataDetalhesAgendamento> agendamentos(String name, StatusAgenda statusAgenda) {
+	public ResponseEntity<List<DataDetalhesAgendamento>> agendamentos(String name, StatusAgendamento statusAgenda) {
 		
-		List<Agendamento> agenda = agendamentoRepository.findByLoginAndStatusAgenda(name,statusAgenda);
+		List<Agendamento> agenda = agendamentoRepository.findByLoginAndStatusAgendamento(name,statusAgenda);
 		
-		return ResponseEntity.ok(null);
+		List<DataDetalhesAgendamento> listAgendamento = agenda.stream()
+			    .map(DataDetalhesAgendamento::new)
+			    .collect(Collectors.toList());
+		
+		return ResponseEntity.ok(listAgendamento);
+	}
+	
+	public ResponseEntity<?> cancelarAgendamento(String name,Long id) {
+		
+		Agendamento agenda = agendamentoRepository.findByLoginAndIdAndStatusAgendamento(name,id,StatusAgendamento.MARCADO);
+		
+		agenda.setAtualizadoEm(LocalDateTime.now());
+		agenda.setStatusAgenda(StatusAgendamento.CANCELADO);
+		
+		return ResponseEntity.ok("Agendamento Cancelado !");
 	}
 
 }

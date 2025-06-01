@@ -29,9 +29,14 @@ public class AgendaController {
 	@PostMapping("/criar")
 	public ResponseEntity<?> criarAgendaDisponivel() {
 		
+		//usar "em producao" funciona todo dia do mes 1
+		
 //	    LocalDate primeiroDia = LocalDate.now();
 //	    LocalDate ultimoDia = primeiroDia.withDayOfMonth(primeiroDia.lengthOfMonth());
 //		agendaService.gerarHorariosDisponiveisParaPeriodo(primeiroDia,ultimoDia);
+		
+		//forma de usar para teste pega o proximo mes
+		
 		LocalDate hoje = LocalDate.now();
 		LocalDate primeiroDiaProximoMes = hoje.plusMonths(1).withDayOfMonth(1);
 		LocalDate ultimoDiaProximoMes = primeiroDiaProximoMes.withDayOfMonth(primeiroDiaProximoMes.lengthOfMonth());

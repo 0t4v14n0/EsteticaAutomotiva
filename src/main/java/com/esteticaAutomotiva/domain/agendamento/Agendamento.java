@@ -3,7 +3,7 @@ package com.esteticaAutomotiva.domain.agendamento;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-import com.esteticaAutomotiva.domain.agenda.enums.StatusAgenda;
+import com.esteticaAutomotiva.domain.agendamento.enums.StatusAgendamento;
 import com.esteticaAutomotiva.domain.pessoa.cliente.Cliente;
 
 @Entity
@@ -14,13 +14,15 @@ public class Agendamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "cliente_id", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 
     private LocalDateTime data;
     
-    private StatusAgenda statusAgenda;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status_agendamento")
+    private StatusAgendamento statusAgendamento;
 
     @Column(name = "criado_em", updatable = false)
     private LocalDateTime criadoEm;
@@ -30,12 +32,12 @@ public class Agendamento {
 
     public Agendamento() {}
     
-    public StatusAgenda getStatusAgenda() {
-		return statusAgenda;
+    public StatusAgendamento getStatusAgenda() {
+		return statusAgendamento;
 	}
 
-	public void setStatusAgenda(StatusAgenda statusAgenda) {
-		this.statusAgenda = statusAgenda;
+	public void setStatusAgenda(StatusAgendamento statusAgenda) {
+		this.statusAgendamento = statusAgenda;
 	}
 
 	public Long getId() {
