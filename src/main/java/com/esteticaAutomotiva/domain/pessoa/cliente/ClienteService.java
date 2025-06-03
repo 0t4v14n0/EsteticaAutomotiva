@@ -103,4 +103,9 @@ public class ClienteService {
 		return (Cliente) pessoaRepository.findByLogin(name);
 	}
 
+	public DataDetalhesCliente dadosCliene(String name) {
+		Cliente cliene = (Cliente) pessoaRepository.findByLogin(name);
+		return new DataDetalhesCliente(cliene);
+	}
+
 }
