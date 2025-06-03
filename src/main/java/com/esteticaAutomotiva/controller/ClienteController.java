@@ -19,7 +19,7 @@ public class ClienteController {
 	private ClienteService clienteService;
 	
     @Transactional
-    @PostMapping("/agendar")
+    @PostMapping("/dados")
     public ResponseEntity<?> agendar(Authentication authentication) {
         return ResponseEntity.ok(clienteService.dadosCliene(authentication.getName()));        
     }
